@@ -1,0 +1,58 @@
+CREATE DATABASE LogisticaDB;
+USE LogisticaDB;
+
+-- Tabla Chofer
+CREATE TABLE Chofer (
+    id_chofer INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    dni VARCHAR(20) UNIQUE,
+    telefono VARCHAR(20)
+);
+
+-- Tabla Camion
+CREATE TABLE Camion (
+    id_camion INT PRIMARY KEY AUTO_INCREMENT,
+    patente VARCHAR(20) UNIQUE,
+    modelo VARCHAR(50),
+    capacidad_tn DECIMAL(5,2)
+);
+
+-- Tabla Estado_Viaje
+CREATE TABLE Estado_Viaje (
+    id_estado INT PRIMARY KEY AUTO_INCREMENT,
+    descripcion VARCHAR(50)
+);
+
+-- Tabla Viaje
+CREATE TABLE Viaje (
+    id_viaje INT PRIMARY KEY AUTO_INCREMENT,
+    fecha DATE,
+    origen VARCHAR(100),
+    destino VARCHAR(100),
+    carga_tn DECIMAL(5,2),
+    id_chofer INT,
+    id_camion INT,
+    id_estado INT,
+    FOREIGN KEY (id_chofer) REFERENCES Chofer(id_chofer),
+    FOREIGN KEY (id_camion) REFERENCES Camion(id_camion),
+    FOREIGN KEY (id_estado) REFERENCES Estado_Viaje(id_estado)
+);
+
+-- Tabla Producto
+CREATE TABLE Producto (
+    id_producto INT PRIMARY KEY AUTO_INCREMENT,
+    descripcion VARCHAR(80),
+    unidad VARCHAR(20)
+);
+
+-- Tabla Movimiento_Deposito
+CREATE TABLE Movimiento_Deposito (
+    id_mov INT PRIMARY KEY AUTO_INCREMENT,
+    fecha DATE,
+    tipo VARCHAR(20),
+    cantidad DECIMAL(10,2),
+    id_producto INT,
+    observaciones VARCHAR(200),
+    FOREIGN KEY (id_producto) REFERENCES Producto(id_producto)
+);
