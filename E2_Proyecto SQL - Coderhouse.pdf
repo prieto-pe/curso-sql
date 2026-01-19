@@ -1,0 +1,146 @@
+============================================================
+PROYECTO FINAL – BASE DE DATOS
+============================================================
+
+Alumno: Pedro Prieto
+Curso: SQL / Bases de Datos
+Entrega: Proyecto Final
+Motor de Base de Datos: MySQL
+
+
+============================================================
+1. INTRODUCCIÓN
+============================================================
+
+El presente proyecto tiene como objetivo el diseño e implementación de una base de datos relacional orientada a la gestión de viajes logísticos, productos transportados y control de stock en depósitos.
+
+Se implementan tablas normalizadas, vistas, funciones personalizadas, procedimientos almacenados y triggers, permitiendo automatizar procesos, garantizar la integridad de los datos y facilitar el análisis de la información almacenada.
+
+
+============================================================
+2. DESCRIPCIÓN GENERAL DEL MODELO
+============================================================
+
+La base de datos modela los siguientes conceptos principales:
+
+- Viajes logísticos
+- Productos transportados en cada viaje
+- Depósitos de origen y destino
+- Movimientos de stock
+- Control automático de stock mediante triggers
+
+El modelo permite registrar viajes, asociar productos a los mismos y descontar stock de manera automática al confirmarse un viaje.
+
+
+============================================================
+3. ESTRUCTURA DE LA BASE DE DATOS
+============================================================
+
+La estructura principal está compuesta por las siguientes tablas:
+
+- depositos
+- productos
+- viajes
+- viaje_productos
+- movimientos_deposito
+
+Cada tabla cuenta con claves primarias, claves foráneas y restricciones que aseguran la integridad referencial del sistema.
+
+
+============================================================
+4. VISTAS IMPLEMENTADAS
+============================================================
+
+Se desarrollaron las siguientes vistas para facilitar el análisis de datos:
+
+1) vw_detalle_viajes_productos  
+   Muestra el detalle de cada viaje junto con los productos transportados,
+   cantidades y depósitos involucrados.
+
+2) vw_stock_actual_producto  
+   Permite visualizar el stock actual de cada producto en cada depósito,
+   calculado a partir de los movimientos registrados.
+
+
+============================================================
+5. FUNCIONES PERSONALIZADAS
+============================================================
+
+Se implementaron las siguientes funciones:
+
+1) fn_total_producto_viaje(id_viaje)  
+   Devuelve la cantidad total de productos transportados en un viaje específico.
+
+2) fn_stock_producto(id_producto)  
+   Devuelve el stock total disponible de un producto, considerando todos
+   los depósitos.
+
+
+============================================================
+6. STORED PROCEDURES
+============================================================
+
+Se desarrollaron procedimientos almacenados para encapsular lógica de negocio:
+
+1) sp_crear_viaje(fecha, origen, destino)  
+   Permite crear un nuevo viaje registrando fecha, depósito de origen y destino.
+
+2) sp_registrar_movimiento_deposito(id_producto, id_deposito, cantidad, tipo)  
+   Registra ingresos o egresos de stock en los depósitos, manteniendo un
+   historial de movimientos.
+
+
+============================================================
+7. TRIGGERS
+============================================================
+
+Se implementó el siguiente trigger:
+
+- tr_descuento_stock_viaje  
+  Se ejecuta automáticamente al insertar registros en la tabla viaje_productos.  
+  Descuenta el stock correspondiente del depósito de origen.  
+  Garantiza la actualización automática del inventario sin intervención manual.
+
+
+============================================================
+8. SCRIPTS
+============================================================
+
+El proyecto se entrega con scripts SQL independientes, permitiendo una ejecución
+ordenada desde una base de datos vacía:
+
+1) 01_creacion_tablas.sql  
+   Contiene la creación de todas las tablas y relaciones.
+
+2) 02_creacion_objetos.sql  
+   Contiene la creación de vistas, funciones personalizadas,
+   stored procedures y triggers.
+
+3) 03_insercion_datos.sql  
+   Inserta registros de prueba en las tablas para permitir
+   la ejecución de vistas, funciones, stored procedures y
+   la activación de triggers.
+
+
+============================================================
+9. ORDEN DE EJECUCIÓN
+============================================================
+
+Para el correcto funcionamiento del sistema, los scripts deben ejecutarse
+en el siguiente orden:
+
+1) 01_creacion_tablas.sql  
+2) 02_creacion_objetos.sql  
+3) 03_insercion_datos.sql  
+
+
+============================================================
+10. CONCLUSIÓN
+============================================================
+
+La base de datos desarrollada cumple con los requerimientos técnicos solicitados,
+implementando correctamente vistas, funciones, procedimientos almacenados y triggers.
+
+El sistema permite automatizar procesos clave, garantizar la integridad de los datos
+y obtener información relevante a partir de consultas optimizadas, cumpliendo con
+los objetivos planteados para el proyecto final.
